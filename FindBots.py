@@ -1,15 +1,19 @@
 ##From the Console Cowboys Youtube Series
 ## Uses the web3.py API to pull down transactions in the latest block
-## Then find likily bot activity but print out possible Frontrunning and Sandwich attacks
+## Then finds likily bot activity and prints out possible Frontrunning and Sandwich attacks
 ## @ficti0n on twitter
+#------------------------------------------------------------------------------------------
 from web3 import Web3
 
-web3 = Web3(Web3.HTTPProvider('ADD INFURA HTTP PROVIDER'))
-
+#------------------------Setup Variables and Connections--------------------#
+web3 = Web3(Web3.HTTPProvider('ADD YOUR HTTP INFURA URL'))
 block = web3.eth.get_block('latest')
 toFromPairs = {}
 transactionCount = {}
+#------------------------Setup Variables and Connections--------------------#
 
+
+#--------------------Begin Main Code Block-----------------------------------#
 #Grab our Transactions and thier transaction hashes
 if block and block.transactions: 
     for transaction in block.transactions: 
@@ -26,6 +30,10 @@ if block and block.transactions:
             elif tx.to not in toFromPairs:
                 transactionCount[tx.to] = 1
                 toFromPairs[tx.to] = tx["from"]
+
+#-------------------- End Main Code Block------------------------------------#
+
+
 
 #Print all pairs with exactly 2 transactions in a single block for manual review
 for key, value in transactionCount.items():
