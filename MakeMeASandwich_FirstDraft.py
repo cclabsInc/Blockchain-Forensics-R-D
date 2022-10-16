@@ -28,7 +28,6 @@ def grabTransactions():
     #Grab our Transactions and thier transaction hashes
     if block and block.transactions: 
         for transaction in block.transactions: 
-            tempTXDict = {}
             tx_hash = transaction.hex() # Convert txhashes from hexBytes format
             tx = web3.eth.get_transaction(tx_hash)
 
@@ -67,12 +66,11 @@ def findSandwich(possibleSandwich):
     #These are parsed into total lists of bots and duplicates
     for sHash, sGas in possibleSandwich.items(): 
         if sGas[1] in allBots.values():
-            #print(f"Adding {sGas[1]} to duplicate bots")
             duplicateBots[sHash] = sGas[1]
         
         elif sGas[1] not in allBots.values():    
-            #print(f"Adding {sGas[1]} to all bots")
             allBots[sHash] = sGas[1]
+            
     print(f'{len(allBots)} bot transactions parsed with 2 like pairs')
     print('---------------------------------------------------------')
     for bot in allBots.keys():
